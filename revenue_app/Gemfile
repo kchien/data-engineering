@@ -32,7 +32,13 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :development do
+  gem 'pry'
+end
+
 group :test do
+  gem 'aruba'
+  gem 'rspec-given', '~> 3.2.0'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
