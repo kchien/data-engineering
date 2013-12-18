@@ -1,5 +1,5 @@
 class RevenuesController < ApplicationController
-  before_action :set_revenue, only: [:show, :edit, :update, :destroy]
+  before_action :set_revenue, only: [:show, :update, :destroy]
 
   # GET /revenues
   # GET /revenues.json
@@ -15,10 +15,6 @@ class RevenuesController < ApplicationController
   # GET /revenues/new
   def new
     @revenue = Revenue.new
-  end
-
-  # GET /revenues/1/edit
-  def edit
   end
 
   # POST /revenues

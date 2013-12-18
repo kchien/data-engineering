@@ -1,3 +1,3 @@
 RevenueApp::Application.routes.draw do
-  resources :revenues
+  resources :revenues, except: [:edit]
 end
