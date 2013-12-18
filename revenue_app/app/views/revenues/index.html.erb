@@ -1,0 +1,28 @@
+<h1>Listing revenues</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Total</th>
+      <th>File name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @revenues.each do |revenue| %>
+      <tr>
+        <td><%= number_to_currency(revenue.total) %></td>
+        <td><%= revenue.purchases_file %></td>
+        <td><%= link_to 'Show', revenue %></td>
+        <td><%= link_to 'Destroy', revenue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Revenue', new_revenue_path %>
