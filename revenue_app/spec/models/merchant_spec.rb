@@ -21,4 +21,14 @@ describe Merchant do
      expect(quick_e_mart.items).to eq([milk])
    end
  end
+
+ context "attempting to add duplicate items" do
+   it "does not add them" do
+     quick_e_mart = described_class.create(address: "Foo St.", name: 'Quick-E-Mart')
+     milk = quick_e_mart.items.create(description: "Milk", price: 0.25)
+     milk2 = quick_e_mart.items.create(description: "Milk", price: 0.25)
+
+     expect(quick_e_mart.items.reload).to eq([milk])
+   end
+ end
 end
