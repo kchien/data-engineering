@@ -13,6 +13,8 @@ describe RevenueCalculator do
     File.join(current_dir, filename)
   }
 
+  Given(:revenue_model) { double("revenue for one file").as_null_object }
+
   context "orders file has only one line of data where customer bought one item" do
     Given(:file_contents) {
 %Q{purchaser name	item description	item price	purchase count	merchant address	merchant name
@@ -20,11 +22,11 @@ Snake Plissken	$10 off $20 of food	10.0	1	987 Fake St	Bob's Pizza}
     }
 
     When(:revenue) {
-      calculator.calculate_revenue_from_file(full_path_to_file)
+      calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
     }
 
     Then {
-      revenue.should == 10.0
+      expect(revenue_model).to have_received(:update_total_to).with(10.0)
     }
 
     context "customer bought two (2) of the same item" do
@@ -34,11 +36,11 @@ Snake Plissken	$10 off $20 of food	10.0	2	987 Fake St	Bob's Pizza}
       }
 
       When(:revenue) {
-       calculator.calculate_revenue_from_file(full_path_to_file)
+       calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
       }
 
       Then {
-        revenue.should == 20.0
+        expect(revenue_model).to have_received(:update_total_to).with(20.0)
       }
     end
   end
@@ -51,10 +53,12 @@ Amy Pond	$30 of awesome for $10	10.0	5	456 Unreal Rd	Tom's Awesome Shop}
     }
 
     When(:revenue) {
-     calculator.calculate_revenue_from_file(full_path_to_file)
+     calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
     }
 
-    Then { revenue.should == 70.0 }
+    Then {
+      expect(revenue_model).to have_received(:update_total_to).with(70.0 )
+    }
   end
 
   context "orders file has lines with duplicate merchants and customers" do
@@ -67,10 +71,12 @@ Snake Plissken	$20 Sneakers for $5	5.0	4	123 Fake St	Sneaker Store Emporium}
     }
 
     When(:revenue) {
-     calculator.calculate_revenue_from_file(full_path_to_file)
+     calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
     }
 
-    Then { revenue.should == 95.0 }
+    Then {
+      expect(revenue_model).to have_received(:update_total_to).with(95.0)
+    }
   end
 
   context "orders file has dollars and cents" do
@@ -80,9 +86,11 @@ Snake Plissken	$10 off $20 of food	10.33	2	987 Fake St	Bob's Pizza}
     }
 
     When(:revenue) {
-     calculator.calculate_revenue_from_file(full_path_to_file)
+     calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
     }
 
-    Then { revenue.should == 20.66 }
+    Then {
+      expect(revenue_model).to have_received(:update_total_to).with(20.66)
+    }
   end
 end
