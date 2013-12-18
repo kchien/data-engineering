@@ -60,5 +60,13 @@ Snake Plissken	$20 Sneakers for $5	5.0	4	123 Fake St	Sneaker Store Emporium}
   end
 
   context "orders file has dollars and cents" do
+    Given(:orders_file) {
+%Q{purchaser name	item description	item price	purchase count	merchant address	merchant name
+Snake Plissken	$10 off $20 of food	10.33	2	987 Fake St	Bob's Pizza}
+    }
+
+    When(:revenue) { calculator.calculate_revenue_from_file(orders_file) }
+
+    Then { revenue.should == 20.66 }
   end
 end
