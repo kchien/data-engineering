@@ -2,7 +2,7 @@ Feature: Calculate revenue from a plain text file, which we obtained from
  the company that we just acquired.
 
 Scenario: Upload a file with two rows
-  Given I have a file with the following content:
+  Given I have a file named "customer_purchases.txt" with the following content:
     """
     purchaser name        item description        item price        purchase count        merchant address        merchant name
 Snake Plissken        $10 off $20 of food        10.0        2        987 Fake St        Bob's Pizza
