@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131218190448) do
+ActiveRecord::Schema.define(version: 20131218210318) do
+
+  create_table "customers", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customers", ["name"], name: "index_customers_on_name"
 
   create_table "revenues", force: true do |t|
     t.decimal  "total"
