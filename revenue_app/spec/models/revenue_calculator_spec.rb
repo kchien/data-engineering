@@ -9,13 +9,10 @@ describe RevenueCalculator do
 
   context "orders file has only one line of data where customer bought one item" do
     Given(:orders_file) {
-    """
-purchaser name	item description	item price	purchase count	merchant address	merchant name
-Snake Plissken	$10 off $20 of food	10.0	1	987 Fake St	Bob's Pizza
-    """
+%Q{purchaser name	item description	item price	purchase count	merchant address	merchant name
+Snake Plissken	$10 off $20 of food	10.0	1	987 Fake St	Bob's Pizza}
     }
-
-
+    
     When(:revenue) { calculator.calculate_revenue_from_file(orders_file) }
 
     Then {
@@ -24,12 +21,9 @@ Snake Plissken	$10 off $20 of food	10.0	1	987 Fake St	Bob's Pizza
 
     context "customer bought two (2) of the same item" do
       Given(:orders_file) {
-      """
-purchaser name	item description	item price	purchase count	merchant address	merchant name
-Snake Plissken	$10 off $20 of food	10.0	2	987 Fake St	Bob's Pizza
-      """
+%Q{purchaser name	item description	item price	purchase count	merchant address	merchant name
+Snake Plissken	$10 off $20 of food	10.0	2	987 Fake St	Bob's Pizza}
       }
-
 
       When(:revenue) { calculator.calculate_revenue_from_file(orders_file) }
 
@@ -42,14 +36,13 @@ Snake Plissken	$10 off $20 of food	10.0	2	987 Fake St	Bob's Pizza
 
   context "orders file has two lines of data from two different customers" do
     Given(:orders_file) {
-  """
-purchaser name	item description	item price	purchase count	merchant address	merchant name
+%Q{purchaser name	item description	item price	purchase count	merchant address	merchant name
 Snake Plissken	$10 off $20 of food	10.0	2	987 Fake St	Bob's Pizza
-Amy Pond	$30 of awesome for $10	10.0	5	456 Unreal Rd	Tom's Awesome Shop
-"""
-   }
+Amy Pond	$30 of awesome for $10	10.0	5	456 Unreal Rd	Tom's Awesome Shop}
+    }
+
     When(:revenue) { calculator.calculate_revenue_from_file(orders_file) }
    
-    #Then { revenue.should == 70.0 }
+    Then { revenue.should == 70.0 }
   end
 end
