@@ -7,5 +7,5 @@ When(/^I upload the revenue file$/) do
 end
 
 Then(/^I should see a gross revenue of \$(\d+)$/) do |revenue|
-pending # express the regexp above with the code you wish you had
+  page.should have_content(revenue)
 end
