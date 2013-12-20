@@ -10,5 +10,13 @@ describe Revenue do
 
     expect(revenue.total).to eq(total_revenue)
   end
+
+  it "provides the full path to its associated plain text file" do
+    this_file = __FILE__
+
+    revenue = described_class.new(purchases_file: File.open(this_file))
+
+    expect(revenue.purchases_file_path).to match /revenue_spec\.rb$/
+  end
 end
 
