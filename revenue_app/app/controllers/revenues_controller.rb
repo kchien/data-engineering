@@ -21,7 +21,7 @@ class RevenuesController < ApplicationController
   # POST /revenues.json
   def create
     r = Revenue.create(revenue_params)
-    file = r.purchases_file.current_path
+    file = r.purchases_file_path
     RevenueCalculator.new.calculate_revenue_from_file(file, r)
     redirect_to revenues_url
   end
