@@ -5,7 +5,13 @@ require 'revenue_calculator'
 require 'pry'
 
 describe RevenueCalculator do
-  Given(:calculator) { described_class.new }
+  Given(:customer_base) { 
+    double("customer base").tap do |c|
+      c.should_receive :store_purchases
+    end
+  }
+
+  Given(:calculator) { described_class.new(customer_base) }
 
   Given(:full_path_to_file) {
     filename = "sample_input.tab"
