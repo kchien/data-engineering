@@ -11,7 +11,9 @@ describe RevenueCalculator do
     end
   }
 
-  Given(:calculator) { described_class.new(customer_base) }
+  Given(:calculator) { 
+    described_class.new(customer_base, revenue_model) 
+  }
 
   Given(:full_path_to_file) {
     filename = "sample_input.tab"
@@ -19,7 +21,9 @@ describe RevenueCalculator do
     File.join(current_dir, filename)
   }
 
-  Given(:revenue_model) { double("revenue for one file").as_null_object }
+  Given(:revenue_model) { 
+    double("revenue for one file", purchases_file_path: full_path_to_file).as_null_object 
+  }
 
   context "orders file has only one line of data where customer bought one item" do
     Given(:file_contents) {
@@ -28,7 +32,7 @@ Snake Plissken	$10 off $20 of food	10.0	1	987 Fake St	Bob's Pizza}
     }
 
     When(:revenue) {
-      calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
+      calculator.calculate_revenue_from_file(full_path_to_file)
     }
 
     Then {
@@ -42,7 +46,7 @@ Snake Plissken	$10 off $20 of food	10.0	2	987 Fake St	Bob's Pizza}
       }
 
       When(:revenue) {
-       calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
+       calculator.calculate_revenue_from_file(full_path_to_file)
       }
 
       Then {
@@ -59,7 +63,7 @@ Amy Pond	$30 of awesome for $10	10.0	5	456 Unreal Rd	Tom's Awesome Shop}
     }
 
     When(:revenue) {
-     calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
+     calculator.calculate_revenue_from_file(full_path_to_file)
     }
 
     Then {
@@ -77,7 +81,7 @@ Snake Plissken	$20 Sneakers for $5	5.0	4	123 Fake St	Sneaker Store Emporium}
     }
 
     When(:revenue) {
-     calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
+     calculator.calculate_revenue_from_file(full_path_to_file)
     }
 
     Then {
@@ -92,7 +96,7 @@ Snake Plissken	$10 off $20 of food	10.33	2	987 Fake St	Bob's Pizza}
     }
 
     When(:revenue) {
-     calculator.calculate_revenue_from_file(full_path_to_file, revenue_model)
+     calculator.calculate_revenue_from_file(full_path_to_file)
     }
 
     Then {

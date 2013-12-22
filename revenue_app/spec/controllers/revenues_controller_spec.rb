@@ -6,9 +6,10 @@ describe RevenuesController do
       calculator = double("revenue calculator")
       RevenueCalculator.stub(:new).and_return(calculator)
 
-      calculator.should_receive(:calculate_revenue_from_file)
+      calculator.should_receive(:calculate_revenue_from_file)\
+         .with("/foo/bar.txt")
 
-      post :create, revenue: {total: 30} 
+      post :create, revenue: {purchases_file: "/foo/bar.txt"} 
     end
   end
 end

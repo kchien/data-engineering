@@ -1,16 +1,17 @@
 require 'csv'
 
 class RevenueCalculator
-  def initialize(customer_base=Customer)
+  def initialize(customer_base=Customer,
+                 revenue=Revenue.new)
     @customer_base = customer_base
+    @revenue = revenue 
   end
 
-  def calculate_revenue_from_file(file, revenue_for_file)
-    csv = parse_line_items_from_file(file)
-
+  def calculate_revenue_from_file(file)
+    revenue.purchases_file = file
+    csv = parse_line_items_from_file(revenue.purchases_file_path)
     customer_base.store_purchases(csv)
-
-    revenue_for_file.update_total_to(sum_of_all_revenues_in(csv))
+    revenue.update_total_to(sum_of_all_revenues_in(csv))
   end
 
   def sum_of_all_revenues_in(csv)
@@ -20,7 +21,7 @@ class RevenueCalculator
   end
 
 private
-  attr_reader :customer_base
+  attr_reader :customer_base, :revenue
 
   def parse_line_items_from_file(file)
     attrs= {headers:true, 
